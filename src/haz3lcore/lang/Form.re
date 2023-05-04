@@ -211,7 +211,7 @@ let forms: list((string, t)) = [
   ("substr1", mk_nul_infix("=.", P.eqs)), // HACK: SUBSTRING REQ
   ("bitwise_and", mk_nul_infix("&", P.and_)), // HACK: SUBSTRING REQ
   ("logical_and", mk_infix("&&", Exp, P.and_)),
-  //("bitwise_or", mk_infix("|", Exp, 5)),
+  ("bitwise_or", mk_infix("|", Exp, P.mult)),
   ("logical_or", mk_infix("||", Exp, P.or_)),
   ("dot", mk(ss, ["."], mk_op(Any, []))), // HACK: SUBSTRING REQ (floats)
   ("unary_minus", mk(ss, ["-"], mk_pre(P.neg, Exp, []))),
@@ -232,7 +232,7 @@ let forms: list((string, t)) = [
   (
     "rule",
     mk(
-      ii,
+      di,
       ["|", "=>"],
       {
         out: Rul,
