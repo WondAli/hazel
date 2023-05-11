@@ -19,7 +19,8 @@ let int_op_of: Term.UExp.op_bin_int => DHExp.BinIntOp.t =
   | GreaterThan => GreaterThan
   | GreaterThanOrEqual => GreaterThanOrEqual
   | Equals => Equals
-  | Power => Power;
+  | Power => Power
+  | BitwiseOr => BitwiseOr;
 
 let float_op_of: Term.UExp.op_bin_float => DHExp.BinFloatOp.t =
   fun

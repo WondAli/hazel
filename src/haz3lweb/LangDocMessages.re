@@ -80,6 +80,7 @@ let fgt = () => Example.mk_monotile(Form.get("fgt"));
 let fgte = () => Example.mk_monotile(Form.get("fgte"));
 let sequals = () => Example.mk_monotile(Form.get("string_equals"));
 let logical_and = () => Example.mk_monotile(Form.get("logical_and"));
+let bitwise_or = () => Example.mk_monotile(Form.get("bitwise_or"));
 let logical_or = () => Example.mk_monotile(Form.get("logical_or"));
 let comma_exp = () => Example.mk_monotile(Form.get("comma_exp"));
 let comma_pat = () => Example.mk_monotile(Form.get("comma_pat"));
@@ -1698,6 +1699,7 @@ let float_gt_group = "float_gt_group";
 let float_gte_group = "float_gte_group";
 let float_eq_group = "float_eq_group";
 let bool_and_group = "bool_and_group";
+let bitwise_or_group = "bitwise_or_group";
 let bool_or_group = "bool_or_group";
 let str_eq_group = "str_eq_group";
 let int_unary_minus_ex = {
@@ -1920,6 +1922,18 @@ let bool_and2_ex = {
   sub_id: "bool_and2_ex",
   term: mk_example("1 < 2 && 3 < 4"),
   message: "The left operand evaluates to true, so evaluate the right operand. Since the right operand also evalutes to true, the whole expression evaluates to true.",
+  feedback: Unselected,
+};
+let bitwise_or1_ex = {
+  sub_id: "bitwise_or1_ex",
+  term: mk_example("1 < 2 && 3 < 4"), // temp string
+  message: "TODO: Example1",
+  feedback: Unselected,
+};
+let bitwise_or2_ex = {
+  sub_id: "bitwise_or2_ex",
+  term: mk_example("1 < 2 && 3 < 4"), // temp string
+  message: "TODO: Example2",
   feedback: Unselected,
 };
 let bool_or1_ex = {
@@ -2445,6 +2459,27 @@ let bool_and_exp: form = {
     expandable_id: None,
     explanation,
     examples: [bool_and1_ex, bool_and2_ex],
+  };
+};
+let _exp1 = exp("e1");
+let _exp2 = exp("e2");
+// TODO: Fix this whole sections
+let bitwise_or_exp_coloring_ids =
+    (~left_id: Id.t, ~right_id: Id.t): list((Id.t, Id.t)) =>
+  _binop_exp_coloring_ids(
+    Piece.id(_exp1),
+    Piece.id(_exp2),
+    ~left_id,
+    ~right_id,
+  );
+let bitwise_or_exp: form = {
+  let explanation = {message: "TODO: Message", feedback: Unselected};
+  {
+    id: "bitwise_or_exp",
+    syntactic_form: [_exp1, space(), bitwise_or(), space(), _exp2],
+    expandable_id: None,
+    explanation,
+    examples: [bitwise_or1_ex, bitwise_or2_ex],
   };
 };
 let _exp1 = exp("e1");
@@ -3182,15 +3217,23 @@ type t = {
 };
 
 let get_group = (group_id, doc: t) => {
-  let (_, form_group) = List.find(((id, _)) => id == group_id, doc.groups);
+  print_endline(group_id);
+  print_endline("searching...");
+  let (_, form_group) =
+    List.find(((id, _)) => {id == group_id}, doc.groups);
+  print_endline("found");
   form_group;
 };
 
 let get_form_and_options = (group_id, doc: t) => {
+  print_endline("check group 1");
   let form_group = get_group(group_id, doc);
+  print_endline("check group 2");
   let (selected_id, _) =
     List.nth(form_group.options, form_group.current_selection);
+  print_endline("check group 3");
   let form = List.find(({id, _}) => id == selected_id, doc.forms);
+  print_endline("check group 4");
   (form, form_group.options);
 };
 
@@ -3327,6 +3370,7 @@ let init = {
     float_gte_exp,
     float_eq_exp,
     bool_and_exp,
+    bitwise_or_exp,
     bool_or_exp,
     str_eq_exp,
     case_exp,
@@ -3680,6 +3724,7 @@ let init = {
     (float_gte_group, init_options([(float_gte_exp.id, [])])),
     (float_eq_group, init_options([(float_eq_exp.id, [])])),
     (bool_and_group, init_options([(bool_and_exp.id, [])])),
+    (bitwise_or_group, init_options([(bitwise_or_exp.id, [])])),
     (bool_or_group, init_options([(bool_or_exp.id, [])])),
     (str_eq_group, init_options([(str_eq_exp.id, [])])),
     (case_exp_group, init_options([(case_exp.id, [])])),

@@ -14,6 +14,7 @@ let precedence_Equals: int;
 let precedence_LessThan: int;
 let precedence_GreaterThan: int;
 let precedence_And: int;
+let precedence_BitwiseOr: int;
 let precedence_Or: int;
 let precedence_Comma: int;
 let precedence_max: int;

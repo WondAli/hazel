@@ -556,6 +556,7 @@ let eval_bin_int_op = (op: DHExp.BinIntOp.t, n1: int, n2: int): DHExp.t => {
   | GreaterThan => BoolLit(n1 > n2)
   | GreaterThanOrEqual => BoolLit(n1 >= n2)
   | Equals => BoolLit(n1 == n2)
+  | BitwiseOr => IntLit(n1 lor n2)
   };
 };
 

@@ -54,7 +54,8 @@ and UExp: {
     | LessThanOrEqual
     | GreaterThan
     | GreaterThanOrEqual
-    | Equals;
+    | Equals
+    | BitwiseOr;
 
   [@deriving (show({with_path: false}), sexp, yojson)]
   type op_bin_float =
@@ -162,7 +163,8 @@ and UExp: {
     | LessThanOrEqual
     | GreaterThan
     | GreaterThanOrEqual
-    | Equals;
+    | Equals
+    | BitwiseOr;
 
   [@deriving (show({with_path: false}), sexp, yojson)]
   type op_bin_float =

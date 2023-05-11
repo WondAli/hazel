@@ -20,7 +20,8 @@ module rec DHExp: {
       | LessThanOrEqual
       | GreaterThan
       | GreaterThanOrEqual
-      | Equals;
+      | Equals
+      | BitwiseOr;
   };
 
   module BinFloatOp: {
@@ -114,7 +115,8 @@ module rec DHExp: {
       | LessThanOrEqual
       | GreaterThan
       | GreaterThanOrEqual
-      | Equals;
+      | Equals
+      | BitwiseOr;
   };
 
   module BinFloatOp = {

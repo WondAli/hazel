@@ -19,6 +19,7 @@ let precedence_bin_int_op = (bio: DHExp.BinIntOp.t) =>
   | LessThanOrEqual => DHDoc_common.precedence_LessThan
   | GreaterThan => DHDoc_common.precedence_GreaterThan
   | GreaterThanOrEqual => DHDoc_common.precedence_GreaterThan
+  | BitwiseOr => DHDoc_common.precedence_BitwiseOr
   };
 let precedence_bin_float_op = (bfo: DHExp.BinFloatOp.t) =>
   switch (bfo) {
@@ -99,6 +100,7 @@ let mk_bin_int_op = (op: DHExp.BinIntOp.t): DHDoc.t =>
     | GreaterThan => ">"
     | GreaterThanOrEqual => ">="
     | Equals => "=="
+    | BitwiseOr => "|"
     },
   );
 

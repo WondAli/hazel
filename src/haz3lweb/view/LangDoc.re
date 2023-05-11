@@ -2089,6 +2089,10 @@ let get_doc =
               LangDocMessages.bool_and_group,
               LangDocMessages.bool_and_exp_coloring_ids,
             )
+          | Int(BitwiseOr) => (
+              LangDocMessages.bitwise_or_group,
+              LangDocMessages.bitwise_or_exp_coloring_ids,
+            )
           | Bool(Or) => (
               LangDocMessages.bool_or_group,
               LangDocMessages.bool_or_exp_coloring_ids,
@@ -2098,21 +2102,27 @@ let get_doc =
               LangDocMessages.str_eq_exp_coloring_ids,
             )
           };
+        print_endline("check1");
         let (doc, options) =
           LangDocMessages.get_form_and_options(group, docs);
+        print_endline("check2");
         let left_id = List.nth(left.ids, 0);
         let right_id = List.nth(right.ids, 0);
-        get_message(
-          doc,
-          options,
-          group,
-          Printf.sprintf(
-            Scanf.format_from_string(doc.explanation.message, "%i%i"),
-            left_id,
-            right_id,
-          ),
-          coloring_ids(~left_id, ~right_id),
-        );
+        print_endline("check3");
+        let temp =
+          get_message(
+            doc,
+            options,
+            group,
+            Printf.sprintf(
+              Scanf.format_from_string(doc.explanation.message, "%i%i"),
+              left_id,
+              right_id,
+            ),
+            coloring_ids(~left_id, ~right_id),
+          );
+        print_endline("all good");
+        temp;
       | Match(scrut, _rules) =>
         let (doc, options) =
           LangDocMessages.get_form_and_options(
