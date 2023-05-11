@@ -71,6 +71,16 @@ module Pervasives = {
       | Indet(d1) => return(Indet(ApBuiltin(name, [d1])))
       };
 
+    /* bitwise or implementation */
+    let int_bitwise_or = (name, r1) =>
+      switch (r1) {
+      | BoxedValue(Tuple([IntLit(n), IntLit(m)])) =>
+        return(BoxedValue(IntLit(n lor m)))
+      | BoxedValue(d1) =>
+        raise(EvaluatorError.Exception(InvalidBoxedTuple(d1)))
+      | Indet(d1) => return(Indet(ApBuiltin(name, [d1])))
+      };
+
     /* PI implementation. */
     let pi = DHExp.FloatLit(Float.pi);
   };
@@ -82,11 +92,18 @@ module Pervasives = {
     Builtin.mk_one(name, Arrow(Int, Float), Impls.float_of_int);
   let modulo = name =>
     Builtin.mk_one(name, Arrow(Prod([Int, Int]), Int), Impls.int_mod);
+  let bitwise_or = name =>
+    Builtin.mk_one(
+      name,
+      Arrow(Prod([Int, Int]), Int),
+      Impls.int_bitwise_or,
+    );
 
   let builtins =
     VarMap.empty
     |> using("pi", pi)
     |> using("int_of_float", int_of_float)
     |> using("float_of_int", float_of_int)
-    |> using("mod", modulo);
+    |> using("mod", modulo)
+    |> using("bitwise_or", bitwise_or);
 };
