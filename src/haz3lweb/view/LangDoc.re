@@ -2102,13 +2102,10 @@ let get_doc =
               LangDocMessages.str_eq_exp_coloring_ids,
             )
           };
-        print_endline("check1");
         let (doc, options) =
           LangDocMessages.get_form_and_options(group, docs);
-        print_endline("check2");
         let left_id = List.nth(left.ids, 0);
         let right_id = List.nth(right.ids, 0);
-        print_endline("check3");
         let temp =
           get_message(
             doc,
@@ -2121,7 +2118,6 @@ let get_doc =
             ),
             coloring_ids(~left_id, ~right_id),
           );
-        print_endline("all good");
         temp;
       | Match(scrut, _rules) =>
         let (doc, options) =

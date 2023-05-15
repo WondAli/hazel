@@ -3216,24 +3216,30 @@ type t = {
   groups: list((string, form_group)),
 };
 
+// temp error handling
+let expect_opt = (err_msg, opt) => {
+  switch (opt) {
+  | Some(x) => x
+  | None =>
+    Printf.printf("Cannot unwrap option. Message: %s\n", err_msg);
+    raise(Not_found);
+  };
+};
+
 let get_group = (group_id, doc: t) => {
-  print_endline(group_id);
-  print_endline("searching...");
   let (_, form_group) =
-    List.find(((id, _)) => {id == group_id}, doc.groups);
-  print_endline("found");
+    List.find_opt(((id, _)) => id == group_id, doc.groups)
+    |> expect_opt(
+         Printf.sprintf("get_group Not_found. group_id=%s", group_id),
+       );
   form_group;
 };
 
 let get_form_and_options = (group_id, doc: t) => {
-  print_endline("check group 1");
   let form_group = get_group(group_id, doc);
-  print_endline("check group 2");
   let (selected_id, _) =
     List.nth(form_group.options, form_group.current_selection);
-  print_endline("check group 3");
   let form = List.find(({id, _}) => id == selected_id, doc.forms);
-  print_endline("check group 4");
   (form, form_group.options);
 };
 
